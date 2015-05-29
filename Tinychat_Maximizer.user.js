@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
+// @author      Tomtom9749
 // @description Adds "maximize" button next to the tinchat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
 // @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
-// @version     1.0
+// @version     1.1
 // ==/UserScript==
  
 // style adding
