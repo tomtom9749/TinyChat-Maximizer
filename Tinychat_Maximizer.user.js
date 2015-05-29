@@ -36,7 +36,7 @@ function resizeTinyChat()
 function cleanerTinyChat()
 {
     // modify css styles
-    addStyle("#wrapper { width: 100% ! important;}");
+    addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
     addStyle("#left_block { width: 100% ! important;}");
  
     // remove unncecessary elements
