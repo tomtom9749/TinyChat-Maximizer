@@ -3,7 +3,7 @@
 // @namespace   http://tinychat.com/
 // @version     1.11
 // @author      Tomtom9749
-// @description Adds "maximize" button next to the tinchat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
+// @description Adds "maximize" button next to the tinychat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
 // @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
