@@ -1,6 +1,7 @@
 // ==UserScript==
-// @name        TinyChat Maximizer
+// @name        TinyChat Maximizer BETA
 // @namespace   http://tinychat.com/
+// @version     1.1
 // @author      Tomtom9749
 // @description Adds "maximize" button next to the tinchat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
@@ -8,7 +9,6 @@
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
 // @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js
-// @version     1.1
 // ==/UserScript==
  
 // style adding
@@ -67,7 +67,7 @@ function addMaximizeButton()
  
     // add the maximize button right after the logo
     var link = document.createElement('a');
-    var div = document.getElementById('logo');
+    var div = document.getElementById('navigation');
     link.className = 'button orange';
     link.addEventListener('click', cleanerTinyChat, false);
     link.innerHTML = '<img src="http://tinychat.com/public/images/exclaim.png">Maximize'
