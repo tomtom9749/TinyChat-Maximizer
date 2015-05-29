@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        TinyChat Maximizer BETA
+// @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
 // @version     1.1
 // @author      Tomtom9749
