@@ -7,6 +7,7 @@
 // @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
+// @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js
 // @version     1.1
 // ==/UserScript==
  
@@ -70,7 +71,6 @@ function addMaximizeButton()
     link.className = 'button orange';
     link.addEventListener('click', cleanerTinyChat, false);
     link.innerHTML = '<img src="http://tinychat.com/public/images/exclaim.png">Maximize'
-    link.style.position = 'absolute';
     div.appendChild(link);
 }
  
