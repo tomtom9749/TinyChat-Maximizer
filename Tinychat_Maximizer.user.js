@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        TinyChat Maximizer
+// @name        TinyChat Maximizerr
 // @namespace   http://tinychat.com/
 // @version     1.11
 // @author      Tomtom9749
@@ -9,6 +9,7 @@
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
 // @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js
+// @grant none
 // ==/UserScript==
  
 // style adding
@@ -28,16 +29,17 @@ function removeById(id)
         element.parentNode.removeChild(element);
 }
  
-// resize the heigh to fit the screen
+// resize the height to fit the screen
 function resizeTinyChat()
 {
-    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-30) + "px";
+    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-15) + "px";
 }
  
 // main cleanup function
 function cleanerTinyChat()
 {
     // modify css styles
+    addStyle("#tinychat { padding: 0px; min-height: auto; }");
     addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
     addStyle("#left_block { width: 100% ! important;}");
  
@@ -52,7 +54,8 @@ function cleanerTinyChat()
     removeById('goods');
     removeById('category-bar');
     removeById('share-bar');
- 
+    removeById('left');
+    
     // resize the heigh to fit the screen
     resizeTinyChat();
     window.addEventListener('resize', resizeTinyChat, false);
