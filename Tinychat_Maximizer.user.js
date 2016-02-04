@@ -55,7 +55,6 @@ function cleanerTinyChat()
     removeById('category-bar');
     removeById('share-bar');
     removeById('left');
-    removeById('tinychat');
     
     // resize the heigh to fit the screen
     resizeTinyChat();
