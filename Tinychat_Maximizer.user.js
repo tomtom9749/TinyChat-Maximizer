@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
-// @version     2.1
+// @version     2.2
 // @author      Tomtom9749
 // @description Adds "maximize" button next to the tinychat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
@@ -24,15 +24,21 @@ function addStyle(css)
 // element removal by id
 function removeById(id)
 {
-    var element = document.getElementById(id);
-    if (element)
-        element.parentNode.removeChild(element);
+    var x = document.getElementById(id);
+    if (x)
+        x.parentNode.removeChild(x);
 }
- 
+
+function cleanImages() {
+    var x = document.getElementsByTagName("IMG");
+    if (x)
+        x.parentNode.removeChild(x);
+}
+
 // resize the height to fit the screen
 function resizeTinyChat()
 {
-    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-15) + "px";
+    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-1) + "px";
 }
  
 // main cleanup function
@@ -42,6 +48,7 @@ function cleanerTinyChat()
     addStyle("#tinychat { padding: 0px; min-height: auto; }");
     addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
     addStyle("#left_block { width: 100% ! important;}");
+    addStyle("#room { padding: 0;}");
  
     // remove unncecessary elements
     removeById('header');
@@ -73,6 +80,7 @@ function addMaximizeButton()
     var div = document.getElementById('navigation');
     link.className = 'button orange';
     link.addEventListener('click', cleanerTinyChat, false);
+    link.addEventListener('click', cleanImages, false);
     link.innerHTML = '<img src="http://tinychat.com/public/images/exclaim.png">Maximize'
     div.appendChild(link);
 }
