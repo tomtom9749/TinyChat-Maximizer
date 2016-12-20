@@ -63,6 +63,9 @@ function cleanerTinyChat()
     removeById('share-bar');
     removeById('left');
     
+    document.documentElement.style.overflow = 'hidden';	 // firefox, chrome
+    document.body.scroll = "no";	// ie only
+	
     // resize the heigh to fit the screen
     resizeTinyChat();
     window.addEventListener('resize', resizeTinyChat, false);
@@ -85,4 +88,6 @@ function addMaximizeButton()
     div.appendChild(link);
 }
  
+ // on load stuff here
+cleanerTinyChat();
 addMaximizeButton();
