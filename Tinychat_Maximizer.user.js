@@ -63,6 +63,7 @@ function cleanerTinyChat()
     removeById('share-bar');
     removeById('left');
     
+    // disable scrollbar thing
     document.documentElement.style.overflow = 'hidden';	 // firefox, chrome
     document.body.scroll = "no";	// ie only
 	
