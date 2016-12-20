@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
-// @version     2.2
+// @version     3.0
 // @author      Tomtom9749
 // @description Adds "maximize" button next to the tinychat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
@@ -12,7 +12,7 @@
 // @grant none
 // ==/UserScript==
  
-// style adding
+// Style adding
 function addStyle(css)
 {
     var style = document.createElement('style');
@@ -21,7 +21,7 @@ function addStyle(css)
     document.getElementsByTagName('head')[0].appendChild(style);
 }
  
-// element removal by id
+// Element removal by id
 function removeById(id)
 {
     var x = document.getElementById(id);
@@ -29,28 +29,28 @@ function removeById(id)
         x.parentNode.removeChild(x);
 }
 
+// Remove images that are not needed
 function cleanImages() {
     var x = document.getElementsByTagName("IMG");
     if (x)
         x.parentNode.removeChild(x);
 }
 
-// resize the height to fit the screen
 function resizeTinyChat()
 {
     document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-1) + "px";
 }
  
-// main cleanup function
+// Main cleanup function
 function cleanerTinyChat()
 {
-    // modify css styles
+    // Modify css styles
     addStyle("#tinychat { padding: 0px; min-height: auto; }");
     addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
     addStyle("#left_block { width: 100% ! important;}");
     addStyle("#room { padding: 0;}");
  
-    // remove unncecessary elements
+    // Remove unncecessary elements
     removeById('header');
     removeById('footer');
     removeById('right_block');
@@ -63,23 +63,22 @@ function cleanerTinyChat()
     removeById('share-bar');
     removeById('left');
     
-    // disable scrollbar thing
-    document.documentElement.style.overflow = 'hidden';	 // firefox, chrome
-    document.body.scroll = "no";	// ie only
+    // Disable Scrollbar
+    document.documentElement.style.overflow = 'hidden';	 // Firefox, Chrome
+    document.body.scroll = "no";	// IE Only
 	
-    // resize the heigh to fit the screen
     resizeTinyChat();
     window.addEventListener('resize', resizeTinyChat, false);
 }
  
-// setup full windows button
+// Setup full window button
 function addMaximizeButton()
 {
-    // only work on rooms
+    // Only work on rooms
     if (!document.getElementById('room'))
         return;
  
-    // add the maximize button right after the logo
+    // Add the maximize button right after the logo
     var link = document.createElement('a');
     var div = document.getElementById('navigation');
     link.className = 'button orange';
@@ -89,6 +88,6 @@ function addMaximizeButton()
     div.appendChild(link);
 }
  
- // on load stuff here
+ // On load stuff here
 cleanerTinyChat();
 addMaximizeButton();
