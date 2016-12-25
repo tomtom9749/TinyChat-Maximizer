@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
-// @version     3.1
+// @version     3.2
 // @author      Tomtom9749
 // @description Adds "maximize" button next to the tinychat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
@@ -32,22 +32,43 @@ function removeById(ids)
 }
 
 // Resize to fit the window
-function resizeTinyChat()
+function resizeTinyChat(size) { document.getElementById('chat').style.height = ($( document ).height()-size) + "px"; }
+function resizeTinyChatMaximized()
 {
-    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-2) + "px";
+    resizeTinyChat(0);
+}
+function resizeTinyChatSmallMode()
+{
+    resizeTinyChat(42);
 }
 
 // First cleanup function
 function cleanTinyChat()
 {
     // Modify css styles
+    $('#room_header').remove();
+    $('.btn-group').remove();
     addStyle("#left_block { width: 100% ! important;}");
     addStyle("#wrapper { padding-bottom: 0px;}");
     addStyle("#room { padding: 0;}");
-    addStyle("#tinychat { min-height: 0;}");
+    addStyle("#header { margin: 0;}");
+    addStyle("#tinychat { padding: 0px; min-height: 0;}");
 
     // Remove unncecessary elements
     removeById(["website", "room-gift-show", "footer", "tcad_container", "share-bar", "body_footer_ad"]);
+    $('[href="https://tinychat.com/payment/upgrade_to_pro/step1"]').remove();
+    $('[href="https://tinychat.com/payment/upgrade_to_pro/step2"]').remove();
+    $('[href="https://tinychat.com/payment/promote_a_room/step1"]').remove();
+    $('[href="https://tinychat.com/gifts"]').remove();
+    $('[href="https://tinychat.com/download"]').remove();
+
+    // Disable Scrollbar
+    document.documentElement.style.overflow = 'hidden';	 // Firefox, Chrome
+    document.body.scroll = "no";	// IE Only
+
+    // Resize the chat and make sure it resizes to window size
+    resizeTinyChatSmallMode();
+    window.addEventListener('resize', resizeTinyChatSmallMode, false);
 }
 
 // Main cleanup function
@@ -59,15 +80,12 @@ function maximizeTinyChat()
     addStyle("#room { padding: 0;}");
 
     // Remove unncecessary elements
-    removeById(["header", "footer", "right_block", "room_header", "ad_banner", "body_footer_ad", "chat-info", "goods", "category-bar", "share-bar", "left"]);
-
-    // Disable Scrollbar
-    document.documentElement.style.overflow = 'hidden';	 // Firefox, Chrome
-    document.body.scroll = "no";	// IE Only
+    removeById(["header", "right_block", "room_header", "ad_banner", "chat-info", "goods", "category-bar", "left"]);
 
     // Resize to fit the window
-    resizeTinyChat();
-    window.addEventListener('resize', resizeTinyChat, false);
+    resizeTinyChat(0);
+    window.removeEventListener("resize", resizeTinyChatSmallMode, false);
+    window.addEventListener('resize', resizeTinyChatMaximized, false);
 }
 
 // Setup full window button
@@ -87,7 +105,34 @@ function addMaximizeButton()
 }
 
 // On load stuff here
+function init()
+{
+    // Only work on rooms
+    if (!document.getElementById('room'))
+        return;
 
-cleanTinyChat();
-maximizeTinyChat();
-addMaximizeButton();
+    // Move Info to Top Bar
+    document.getElementById('room_info').classList.remove('name');
+    $( '#room_info' ).insertAfter( $( '#logo' ) );
+    document.getElementById('room_info').id='room_info_anyone';
+    var info_anyone = document.getElementById('room_info_anyone');
+    if (info_anyone) {
+        addStyle('#room_info_anyone { margin: 0px; display: inline-block; color: #fff; vertical-align: middle; margin-top: 4px; margin-left: 25px; padding: 0;}');
+
+        $('h1 > small').remove();
+        $('#room_info_anyone > h2').remove();
+        $('#location').remove();
+    }
+    // Hide Popularity stuff if exists
+    var popularity_anyone = document.getElementById('room-popularity-container');
+    if (popularity_anyone) {
+        popularity_anyone.style.display = 'none';
+    }
+
+    // Execute the rest of the script
+    cleanTinyChat();
+    addMaximizeButton();
+}
+
+// Init Script Now after functions
+init();
