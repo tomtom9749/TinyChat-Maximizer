@@ -8,7 +8,7 @@
 // @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
-// @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/blob/master/Tinychat_Maximizer_Manual.user.js
+// @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer_Manual.user.js
 // @grant none
 // ==/UserScript==
 
