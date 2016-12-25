@@ -11,7 +11,7 @@
 // @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js
 // @grant none
 // ==/UserScript==
- 
+
 // Style adding
 function addStyle(css)
 {
@@ -20,7 +20,7 @@ function addStyle(css)
     style.type='text/css';
     document.getElementsByTagName('head')[0].appendChild(style);
 }
- 
+
 // Element removal by id
 function removeById(id)
 {
@@ -41,7 +41,7 @@ function resizeTinyChat()
 {
     document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-1) + "px";
 }
- 
+
 // Main cleanup function
 function cleanerTinyChat()
 {
@@ -50,7 +50,7 @@ function cleanerTinyChat()
     addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
     addStyle("#left_block { width: 100% ! important;}");
     addStyle("#room { padding: 0;}");
- 
+
     // Remove unncecessary elements
     removeById('header');
     removeById('footer');
@@ -63,23 +63,23 @@ function cleanerTinyChat()
     removeById('category-bar');
     removeById('share-bar');
     removeById('left');
-    
+
     // Disable Scrollbar
     document.documentElement.style.overflow = 'hidden';	 // Firefox, Chrome
     document.body.scroll = "no";	// IE Only
-	
+
     // Resize to fit the window
     resizeTinyChat();
     window.addEventListener('resize', resizeTinyChat, false);
 }
- 
+
 // Setup full window button
 function addMaximizeButton()
 {
     // Only work on rooms
     if (!document.getElementById('room'))
         return;
- 
+
     // Add the maximize button right after the logo
     var link = document.createElement('a');
     var div = document.getElementById('navigation');
@@ -89,7 +89,6 @@ function addMaximizeButton()
     link.innerHTML = '<img src="http://tinychat.com/public/images/exclaim.png">Maximize'
     div.appendChild(link);
 }
- 
+
  // On load stuff here
-cleanerTinyChat();
 addMaximizeButton();
