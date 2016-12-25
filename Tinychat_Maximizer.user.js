@@ -8,7 +8,6 @@
 // @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
 // @include     https://*.tinychat.com/*
-// @require     https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js
 // @grant none
 // ==/UserScript==
 
@@ -38,7 +37,7 @@ function resizeTinyChat()
 }
 function resizeTinyChatSmallMode()
 {
-    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-50) + "px";
+    document.getElementById('chat').style.height = (document.getElementsByTagName('body')[0].clientHeight-44) + "px";
 }
 
 // First cleanup function
@@ -46,10 +45,12 @@ function cleanTinyChat()
 {
     // Modify css styles
     $('#room_header').remove();
+    $('.btn-group').remove();
     addStyle("#left_block { width: 100% ! important;}");
     addStyle("#wrapper { padding-bottom: 0px;}");
     addStyle("#room { padding: 0;}");
-    addStyle("#tinychat { padding: 0; min-height: 0;}");
+    addStyle("#header { margin: 0;}");
+    addStyle("#tinychat { padding: 0px; min-height: 0;}");
 
     // Remove unncecessary elements
     removeById(["website", "room-gift-show", "footer", "tcad_container", "share-bar", "body_footer_ad"]);
@@ -102,24 +103,34 @@ function addMaximizeButton()
 }
 
 // On load stuff here
+function init()
+{
+    // Only work on rooms
+    if (!document.getElementById('room'))
+        return;
 
-// Move Info to Top Bar
-document.getElementById('room_info').classList.remove('name');
-$( '#room_info' ).insertAfter( $( '#logo' ) );
-document.getElementById('room_info').id='room_info_anyone';
-var info_anyone = document.getElementById('room_info_anyone');
-if (info_anyone) {
-    addStyle('#room_info_anyone { margin: 0px; display: inline-block; color: #fff; vertical-align: middle; margin-top: 4px; margin-left: 25px; padding: 0;}');
+    // Move Info to Top Bar
+    document.getElementById('room_info').classList.remove('name');
+    $( '#room_info' ).insertAfter( $( '#logo' ) );
+    document.getElementById('room_info').id='room_info_anyone';
+    var info_anyone = document.getElementById('room_info_anyone');
+    if (info_anyone) {
+        addStyle('#room_info_anyone { margin: 0px; display: inline-block; color: #fff; vertical-align: middle; margin-top: 4px; margin-left: 25px; padding: 0;}');
 
-    $('h1 > small').remove();
-    $('#room_info_anyone > h2').remove();
-    $('#location').remove();
+        $('h1 > small').remove();
+        $('#room_info_anyone > h2').remove();
+        $('#location').remove();
+    }
+    // Hide Popularity stuff if exists
+    var popularity_anyone = document.getElementById('room-popularity-container');
+    if (popularity_anyone) {
+        popularity_anyone.style.display = 'none';
+    }
+
+    // Execute the rest of the script
+    cleanTinyChat();
+    addMaximizeButton();
 }
-// Hide Popularity stuff if exists
-var popularity_anyone = document.getElementById('room-popularity-container');
-if (popularity_anyone) {
-    popularity_anyone.style.display = 'none';
-}
 
-cleanTinyChat();
-addMaximizeButton();
+// Init Script Now after functions
+init();
