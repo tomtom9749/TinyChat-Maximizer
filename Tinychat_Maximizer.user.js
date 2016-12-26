@@ -1,13 +1,17 @@
 // ==UserScript==
 // @name        TinyChat Maximizer
 // @namespace   http://tinychat.com/
-// @version     3.2
+// @version     3.3
 // @author      Tomtom9749
 // @description Adds "maximize" button next to the tinychat.com logo while in a room. Clicking this button should remove unneeded components and maximize the room to fit the browser window.
 // @include     http://tinychat.com/*
-// @include     http://*.tinychat.com/*
 // @include     https://tinychat.com/*
-// @include     https://*.tinychat.com/*
+// @exclude     https://tinychat.com/home
+// @exclude     https://tinychat.com/download
+// @exclude     https://tinychat.com/settings
+// @exclude     https://tinychat.com/login
+// @exclude     https://tinychat.com/gifts
+// @exclude     /^https?://tinychat.com/.*//
 // @downloadURL https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js
 // @grant none
 // ==/UserScript==
@@ -46,8 +50,6 @@ function resizeTinyChatSmallMode()
 function cleanTinyChat()
 {
     // Modify css styles
-    $('#room_header').remove();
-    $('.btn-group').remove();
     addStyle("#left_block { width: 100% ! important;}");
     addStyle("#wrapper { padding-bottom: 0px;}");
     addStyle("#room { padding: 0;}");
@@ -61,6 +63,8 @@ function cleanTinyChat()
     $('[href="https://tinychat.com/payment/promote_a_room/step1"]').remove();
     $('[href="https://tinychat.com/gifts"]').remove();
     $('[href="https://tinychat.com/download"]').remove();
+    $('.btn-group').remove();
+    $('#room_header').remove();
 
     // Disable Scrollbar
     document.documentElement.style.overflow = 'hidden';	 // Firefox, Chrome
@@ -74,16 +78,11 @@ function cleanTinyChat()
 // Main cleanup function
 function maximizeTinyChat()
 {
-    // Modify css styles
-    addStyle("#tinychat { padding: 0px; min-height: auto; }");
-    addStyle("#wrapper { width: 100% ! important; padding-bottom: 0px;}");
-    addStyle("#room { padding: 0;}");
-
     // Remove unncecessary elements
     removeById(["header", "right_block", "room_header", "ad_banner", "chat-info", "goods", "category-bar", "left"]);
 
     // Resize to fit the window
-    resizeTinyChat(0);
+    resizeTinyChatMaximized();
     window.removeEventListener("resize", resizeTinyChatSmallMode, false);
     window.addEventListener('resize', resizeTinyChatMaximized, false);
 }
@@ -91,17 +90,14 @@ function maximizeTinyChat()
 // Setup full window button
 function addMaximizeButton()
 {
-    // Only work on rooms
-    if (!document.getElementById('room'))
-        return;
-
     // Add the maximize button right after the logo
     var link = document.createElement('a');
     var div = document.getElementById('navigation');
-    link.className = 'button orange';
+    link.className = 'button white';
     link.addEventListener('click', maximizeTinyChat, false);
-    link.innerHTML = '<img src="http://tinychat.com/public/images/exclaim.png">Maximize';
+    link.innerHTML = 'Maximize';
     div.appendChild(link);
+    $( ".button" ).css("border","0px");
 }
 
 // On load stuff here
@@ -112,22 +108,17 @@ function init()
         return;
 
     // Move Info to Top Bar
-    document.getElementById('room_info').classList.remove('name');
-    $( '#room_info' ).insertAfter( $( '#logo' ) );
-    document.getElementById('room_info').id='room_info_anyone';
-    var info_anyone = document.getElementById('room_info_anyone');
-    if (info_anyone) {
-        addStyle('#room_info_anyone { margin: 0px; display: inline-block; color: #fff; vertical-align: middle; margin-top: 4px; margin-left: 25px; padding: 0;}');
+    $( '#room_info' ).removeClass( 'name' )
+        .insertAfter( '#logo' )
+        .attr('id', 'room_info_anyone');
 
-        $('h1 > small').remove();
-        $('#room_info_anyone > h2').remove();
-        $('#location').remove();
-    }
+    addStyle('#room_info_anyone { margin: 0px; display: inline-block; color: #fff; vertical-align: middle; margin-top: 4px; margin-left: 25px; padding: 0;}');
+
+    $('h1 > small').remove();
+    $('#room_info_anyone > h2').remove();
+    $('#location').remove();
     // Hide Popularity stuff if exists
-    var popularity_anyone = document.getElementById('room-popularity-container');
-    if (popularity_anyone) {
-        popularity_anyone.style.display = 'none';
-    }
+    $('room-popularity-container').remove();
 
     // Execute the rest of the script
     cleanTinyChat();
