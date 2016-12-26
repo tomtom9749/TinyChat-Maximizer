@@ -11,9 +11,9 @@
  + Download the script and install it by choosing which version you want below.
 
 ## Download
-  * [Github - Manual Version](https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer_Manual.user.js)
+  * [GreasyFork - Auto](https://greasyfork.org/en/scripts/10112-tinychat-maximizer)
   * [Github - Auto](https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer.user.js)
-  * Or [GreasyFork - Auto](https://greasyfork.org/en/scripts/10112-tinychat-maximizer)
+  * Or [Github - Manual Version](https://github.com/tomtom9749/TinyChat-Maximizer/raw/master/Tinychat_Maximizer_Manual.user.js)
 
 
 ## License
